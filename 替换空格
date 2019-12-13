@@ -1,0 +1,29 @@
+题目：实现一个函数，把字符串中的每个空格替换成“%20”。例如：输入"We are happy"，则输出"We%20are%20happy"。
+
+思路：如果从头遍历字符串，遇到一个空格，就插入%20的话，那每次都要移动后面多个字符，复杂度为 O(n^2)。
+      所以要从后面开始插入。事先遍历一遍，算出空格的数量，令一个指针P2指向扩容后的位置，一个指针P1指向原来字符串长度的位置，
+      如果P1处不是空格，直接复制到P2，P1和P2都向前移动一位；如果P1处是空格，P1向前移动一位，在P2从尾到头依此写入0、2、%。
+      
+    public static String replaceSpace(StringBuffer str) {
+        if (str == null)
+            return null;
+            
+        int P1 = str.length() - 1;//原来字符串末尾字符的位置
+        for (int i = 0; i <= P1; i++) {
+            if (str.charAt(i) == ' ') {
+                str.append("  "); //两个空格
+            }
+        }
+        int P2 = str.length() - 1;  
+        while (P1 >= 0 && P2 > P1) {
+            char ch = str.charAt(P1--);
+            if (c == ' ') {
+                str.setCharAt(P2--, '0');
+                str.setCharAt(P2--, '2');
+                str.setCharAt(P2--, '%');
+            } else {
+                str.setCharAt(P2--, ch);
+            }
+        }
+        return str.toString();
+    }
