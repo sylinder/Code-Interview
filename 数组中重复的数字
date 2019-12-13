@@ -1,0 +1,63 @@
+   /**
+	 * 题目：重复的数字
+	 * 
+	 * 题目： 在一个长度为n的数组中，所有的数字都在0~n-1的范围内。数组中某些数字是重复的，但是不知道有几个数字重复了，
+	 * 也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+	 */
+     
+   
+   //思路1：排序。有序的数组中找到重复的数字就很简单了。时间复杂度复杂度O(nlog(n))， 空间复杂度O(1).
+   public static boolean duplicate(int[] nums, int length, int[] duplication) {
+        if (nums == null || length <= 0)
+            return false;
+            
+        Arrays.sort(nums);
+        for (int i = 1; i < length; i++) {
+            if (nums[i] == nums[i - 1]) {
+                duplication[0] = nums[i];
+                return true;
+            }
+        }
+        return false;
+   }
+   
+   
+   //思路2：用HashMap();数组中的数字作为key，出现的次数作为value。时间复杂度O(nlogn),空间复杂度O(n).
+   public static boolean duplicate2(int[] nums, int length, int[] duplication) {
+        if (nums == null || length <= 0)
+            return false;
+        
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            if (map.containsKey(nums[i])){
+                duplication[0] = nums[i];
+                return true;
+            }
+            map.put(nums[i], 1);
+        }
+        return false;
+   }
+   
+   
+   //3：因为数字的范围在0~n-1，所以可以把数字i放到数组中下标为i的位置上，因为有重复的数字，所以必然会出现在某个位置会发生冲突的情况，此时返回即可。
+   //复杂度O(n), 空间复杂度O(1).
+   public static boolean duplicate(int[] nums, int length, int[] duplication) {
+        if (nums == null || length <= 0)
+            return false;
+        for (int i = 0; i < length; i++) {
+            while (nums[i] != i) {
+                if (nums[i] == nums[nums[i]]) {
+                    duplication[0] = nums[i];
+                    return true;
+                }
+                swap(nums, i, nums[i]);
+            }
+        }
+        return false;
+   }
+   
+   public static void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+   }
