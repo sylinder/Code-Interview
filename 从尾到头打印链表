@@ -1,0 +1,24 @@
+**题目：输入一个链表的头节点，从尾到头反过来打印出每个节点的值**
+链表的节点为：
+class ListNode {
+    int val;
+    ListNode next;
+}
+
+
+
+思路1：因为这个是逆序打印，栈就是一个很好的解决方案。
+
+'''
+public void printListFromTail(ListNode head) {
+    Stack<Integer> stack = new Stack<>();
+    while (head != null) {
+        stack.push(head.val);
+        head = head.next;
+    }
+    
+    while (!stack.isEmpty()) {
+        System.out.println(stack.pop());
+    }
+}
+'''
